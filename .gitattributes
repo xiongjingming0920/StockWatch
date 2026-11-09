@@ -1,0 +1,3 @@
+# Preserve the fixed dataset byte-for-byte across Windows, macOS and Linux.
+# Its SHA-256 is part of the data contract, model and evaluation suite.
+backend/data/freshretail_sample.csv -text

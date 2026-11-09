@@ -1,0 +1,19 @@
+{
+  "contract_id": "stockwatch.freshretail.daily.v1",
+  "version": "1.0.0",
+  "purpose": "离线校验生鲜门店商品日粒度历史样本；不代表已接入线上数据闸门",
+  "source": {"name": "FreshRetailNet-50K", "url": "https://huggingface.co/datasets/Dingdong-Inc/FreshRetailNet-50K", "revision": "c374e85975c82816c495acfa904cc55ab14a47d3", "license": "CC-BY-4.0", "reference_sha256": "03b8e72f1060e956e141ee8e93b7221d1ff90570def8e92bdd0318e45ed87d41", "reference_rows": 19400, "reference_date_min": "2024-03-28", "reference_date_max": "2024-07-02", "selection": "固定非随机子集，200个匿名门店商品组合"},
+  "grain": "一行代表一个门店、一个商品、一个自然日",
+  "primary_key": ["store_id", "product_id", "dt"],
+  "fields": {
+    "store_id": {"type": "string", "required": true, "nullable": false, "description": "匿名门店标识，必须保留为字符串"},
+    "product_id": {"type": "string", "required": true, "nullable": false, "description": "匿名商品标识，必须保留为字符串"},
+    "dt": {"type": "date", "format": "YYYY-MM-DD", "required": true, "nullable": false, "description": "数据记录日期；无可用时间字段，不可仅凭日期证明实际可获得时间"},
+    "stock_hour6_22_cnt": {"type": "number", "minimum": 0, "maximum": 16, "required": true, "nullable": true, "description": "6至22时内缺货小时数，空值为未知，不当作零"},
+    "sale_amount": {"type": "number", "minimum": 0, "required": true, "nullable": true, "description": "归一化销量；空值为未知，不代表实际件数或金额"},
+    "hours_stock_status": {"type": "string", "required": false, "nullable": true, "description": "源数据小时状态；本合同不据此推断具体语义，也不参与当前排序"}
+  },
+  "temporal_policy": {"as_of_semantics": "历史特征仅用 T 日及以前的记录；次日标签仅用于事后回测", "availability_caveat": "数据不包含可用时间，不能证明迟到或修订数据在 T 时实际可用；生产系统应增加可用时间"},
+  "missing_policy": "关键键和日期缺失为错误；缺货和销量字段允许为空但报告警告，未知不能按零计算；当前规则排除缺货未知的7日窗口，模型还要求销量可用",
+  "validation_scope": "仅检查静态文件和声明；不检查线上是否实际执行时间过滤或是否已经获得业务授权"
+}

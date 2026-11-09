@@ -1,0 +1,14 @@
+import assert from 'node:assert/strict';
+import {textOperate,genericChat} from './lib/generic.mjs';
+const text='前言\n'+'长'.repeat(5000)+'\n末尾包含关键事实';
+assert.equal(textOperate(text,'text_profile',{}).line_count,3);
+assert.equal(textOperate(text,'search_text',{query:'关键事实'}).matches[0].line,3);
+assert.match(textOperate(text,'read_text_segment',{start:4000,length:2000}).text,/关键事实/);
+await assert.rejects(genericChat({message:'概况',dataset:{name:'a',text:'长'.repeat(70000)}}));
+await assert.rejects(genericChat({message:'概况',dataset:{name:'a',text:'a',csv:'x\ny'}}));
+console.log('TXT support checks passed');
+import handler from './functions/api.mjs';
+process.env.STOCKWATCH_SITE_TOKEN='t'.repeat(32);
+const invalid=await handler(new Request('https://example.test/api/v1/chat',{method:'POST',headers:{'x-stockwatch-token':process.env.STOCKWATCH_SITE_TOKEN},body:new Uint8Array([0xff,0xfe])}));assert.equal(invalid.status,422);
+await assert.rejects(genericChat({message:'概况',dataset:{name:'empty.txt',text:''}}));
+await assert.rejects(genericChat({message:'概况',dataset:{name:'too-large.txt',text:'a'.repeat(204801)}}));

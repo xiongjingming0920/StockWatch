@@ -1,0 +1,19 @@
+{
+  "version": "freshretail-gold-v1",
+  "dataset_sha256": "03b8e72f1060e956e141ee8e93b7221d1ff90570def8e92bdd0318e45ed87d41",
+  "cases": [
+    {"id":"H01","kind":"history","as_of":"2024-07-01","store":"16","product":"90","question":"最近7天缺货几天？","expected":{"start_date":"2024-06-25","end_date":"2024-07-01","observed_days":7,"stockout_days":7,"missing_count":0,"unknown_count":0}},
+    {"id":"H02","kind":"history","as_of":"2024-07-01","store":"16","product":"90","question":"最近14天缺货几天？","expected":{"start_date":"2024-06-18","end_date":"2024-07-01","observed_days":14,"stockout_days":10,"missing_count":0,"unknown_count":0}},
+    {"id":"H03","kind":"history","as_of":"2024-07-01","store":"16","product":"90","question":"最近1天缺货几天？","expected":{"start_date":"2024-07-01","end_date":"2024-07-01","observed_days":1,"stockout_days":1,"missing_count":0,"unknown_count":0}},
+    {"id":"H04","kind":"history","as_of":"2024-07-01","store":"0","product":"19","question":"最近7天缺货几天？","expected":{"start_date":"2024-06-25","end_date":"2024-07-01","observed_days":7,"stockout_days":5,"missing_count":0,"unknown_count":0}},
+    {"id":"H05","kind":"history","as_of":"2024-04-03","store":"16","product":"90","question":"最近90天缺货几天？","expected":{"start_date":"2024-01-05","end_date":"2024-04-03","observed_days":7,"stockout_days":5,"missing_count":83,"unknown_count":0}},
+    {"id":"R01","kind":"ranking","as_of":"2024-07-01","store":"16","product":"90","expected":{"rank":1,"stockout_days_7d":7,"stockout_hours_7d":82.0,"score":1.0}},
+    {"id":"R02","kind":"ranking","as_of":"2024-07-01","store":"6","product":"77","expected":{"rank":2,"stockout_days_7d":7,"stockout_hours_7d":83.0,"score":1.0}},
+    {"id":"B01","kind":"limits","as_of":"2024-07-01","store":"16","product":"90","question":"这个商品需要补货多少？","expected":{"must_include":["无法确定","应补货数量"]}},
+    {"id":"B02","kind":"limits","as_of":"2024-07-01","store":"16","product":"90","question":"缺货根因是什么？","expected":{"must_include":["无法确定","缺货根因"]}},
+    {"id":"T01","kind":"future_mutation","as_of":"2024-07-01","store":"16","product":"90","expected":{"results_unchanged":true}},
+    {"id":"S01","kind":"synthetic_missing_history","as_of":"2024-07-01","store":"16","product":"90","expected":{"candidate_present":false}},
+    {"id":"S02","kind":"synthetic_unknown_label","as_of":"2024-07-01","store":"16","product":"90","expected":{"known_label_count":199,"unknown_label_count":1,"selected_known_count":29,"hits":18}},
+    {"id":"L01","kind":"llm_followup","question":"最近7天缺货几天？接着追问最近14天呢？","expected":{"assessment":"unassessed","reason":"离线模式不调用大模型，后续需人工或专门评测模型回答。"}}
+  ]
+}

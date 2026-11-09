@@ -1,0 +1,8 @@
+[build]
+  publish = "frontend"
+  functions = "netlify/functions"
+
+[functions]
+  node_bundler = "esbuild"
+  included_files = ["backend/data/freshretail_sample.csv", "backend/data/source.json", "backend/models/risk_model.json"]
+

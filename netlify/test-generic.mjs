@@ -1,0 +1,13 @@
+import assert from 'node:assert/strict';
+import {parseCsv,operate,genericChat} from './lib/generic.mjs';
+import handler from './functions/api.mjs';
+const d=parseCsv('地区,销售额,备注\n北京,3,"a,b"\n上海,5,"quoted ""ok"""\n北京,,missing\n');
+assert.equal(d.rows.length,3);assert.equal(d.rows[0][2],'a,b');assert.equal(operate(d,'column_summary',{column:'销售额'}).mean,4);assert.equal(operate(d,'group_summary',{group_by:'地区',operation:'count'}).groups[0].value,2);
+const emptyRows=parseCsv('a,b,c\n,,\n, ,\nx,1,2\n');assert.equal(emptyRows.rows.length,3);assert.equal(operate(emptyRows,'profile_dataset',{}).columns[0].missing,2);const distinct=operate(parseCsv('group,value\n（缺失）,1\n,2\n'),'group_summary',{group_by:'group',operation:'count'});assert.equal(distinct.total_groups,2);assert.equal(distinct.groups.filter(x=>x.is_missing).length,1);
+assert.throws(()=>parseCsv('a,a\n1,2'));assert.throws(()=>parseCsv('a,b\n1'));assert.throws(()=>parseCsv('a\n"unclosed'));assert.throws(()=>operate(d,'column_summary',{column:'none'}));assert.throws(()=>parseCsv('a\n'+'1\n'.repeat(5001)));
+process.env.STOCKWATCH_LLM_API_KEY='test-only';process.env.STOCKWATCH_SITE_TOKEN='t'.repeat(32);const previous=globalThis.fetch;let round=0;
+globalThis.fetch=async(_url,options)=>{let b=JSON.parse(options.body);if(!round++){assert.equal(b.tool_choice,'required');return Response.json({choices:[{message:{tool_calls:[{id:'1',type:'function',function:{name:'column_summary',arguments:JSON.stringify({column:'销售额'})}}]}}]})}assert.equal(b.messages.at(-1).role,'tool');return Response.json({choices:[{message:{content:'数值均值为 4。'}}]})};
+let result=await genericChat({message:'均值多少',dataset:{name:'test.csv',csv:'地区,销售额\n北京,3\n上海,5'}});assert.equal(result.evidence.column_summary.mean,4);assert.match(result.answer,/4/);globalThis.fetch=previous;
+let denied=await handler(new Request('https://example.test/api/v1/chat',{method:'POST',body:'{}'}));assert.equal(denied.status,401);
+let invalid=await handler(new Request('https://example.test/api/v1/chat',{method:'POST',headers:{'x-stockwatch-token':process.env.STOCKWATCH_SITE_TOKEN},body:JSON.stringify({message:'q',dataset:{name:'x',csv:'a,a\n1,2'}})}));assert.equal(invalid.status,422);
+console.log('Generic CSV and tool-calling checks passed');

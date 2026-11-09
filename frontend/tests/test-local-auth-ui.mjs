@@ -1,0 +1,38 @@
+import assert from 'node:assert/strict';
+import {readFile} from 'node:fs/promises';
+const source=await readFile(new URL('../vendor/local-auth-ui.js',import.meta.url),'utf8');
+let run=0;
+async function scenario(sessionStatus,sessionBody={},postResponse={user:{id:'admin',roles:['super_admin']}}){
+ const elements=new Map(),calls=[];let reloads=0;
+ globalThis.document={querySelector(key){if(!elements.has(key))elements.set(key,{hidden:true,textContent:'',value:'',handlers:{},setAttribute(){},addEventListener(event,fn){this.handlers[event]=fn}});return elements.get(key)}};
+ globalThis.window={location:{reload(){reloads++}}};
+ globalThis.fetch=async(url,options)=>{calls.push({url,options});return url.endsWith('/session')?{ok:sessionStatus===200,status:sessionStatus,json:async()=>sessionBody}:{ok:true,status:200,json:async()=>postResponse}};
+ const module=await import('data:text/javascript;base64,'+Buffer.from(source).toString('base64')+'#'+(++run));
+ const user=await module.requireLogin({registration_open:true});
+ for(const id of ["#authSignupEmail","#authSignupPassword","#authSignupConfirm","#authPassword"])document.querySelector(id);
+ return {user,elements,calls,reloads:()=>reloads};
+}
+let s=await scenario(401);
+assert.equal(s.elements.get('#authPanel').hidden,false);
+assert.equal(s.elements.get('#authForgot').hidden,true);
+s.elements.get('#authShowRegister').handlers.click();
+assert.match(s.elements.get('#authIntro').textContent,/无需邮箱验证/);
+assert.match(s.elements.get('#authIntro').textContent,/第一个注册/);
+for(const [id,value] of [['#authSignupEmail','admin@example.test'],['#authSignupPassword','test-password'],['#authSignupConfirm','different-password']])s.elements.get(id).value=value;
+await s.elements.get('#authSignup').handlers.submit({preventDefault(){}});
+assert.equal(s.calls.length,1,'mismatched passwords must not be submitted');
+s.elements.get('#authSignupPassword').value='test-password';s.elements.get('#authSignupConfirm').value='test-password';
+await s.elements.get('#authSignup').handlers.submit({preventDefault(){}});
+assert.deepEqual(JSON.parse(s.calls[1].options.body),{email:'admin@example.test',password:'test-password'});
+assert.equal(s.elements.get('#authSignupPassword').value,'');
+assert.match(s.elements.get('#authMessage').textContent,/超级管理员/);
+assert.equal(s.elements.get('#authLogin').hidden,false);
+s.elements.get('#authPassword').value='test-password';await s.elements.get('#authLogin').handlers.submit({preventDefault(){}});
+assert.equal(s.calls[2].url,'/api/v1/auth/login');assert.equal(s.reloads(),1);
+assert.equal(s.elements.get('#authPassword').value,'');
+s=await scenario(200,{user:{id:'admin',roles:['super_admin']}});assert.equal(s.user.id,'admin');
+s=await scenario(200,{user:{id:'regular',roles:['user']}});assert.equal(s.user,null);
+assert.match(s.elements.get('#authMessage').textContent,/暂不能使用/);assert.equal(s.elements.get('#authSwitchAccount').hidden,false);
+await s.elements.get('#authSwitchAccount').handlers.click();assert.equal(s.calls[1].url,'/api/v1/auth/logout');assert.equal(s.reloads(),1);
+s=await scenario(503);assert.equal(s.elements.get('#authLogin').hidden,true);
+console.log('Local authentication UI checks passed');

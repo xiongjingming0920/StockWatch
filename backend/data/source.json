@@ -1,0 +1,10 @@
+{
+  "source": "FreshRetailNet-50K",
+  "kind": "real",
+  "citation": "https://huggingface.co/datasets/Dingdong-Inc/FreshRetailNet-50K",
+  "revision": "c374e85975c82816c495acfa904cc55ab14a47d3",
+  "license": "CC-BY-4.0",
+  "selection": "first 200 pairs on training start 2024-03-28, ordered by 10-product blocks per store; all available train/eval dates",
+  "rows": 19400,
+  "sha256": "03b8e72f1060e956e141ee8e93b7221d1ff90570def8e92bdd0318e45ed87d41"
+}

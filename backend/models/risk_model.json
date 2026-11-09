@@ -1,0 +1,477 @@
+{
+  "means": [
+    3.0424264705882353,
+    24.01875,
+    0.4364705882352941,
+    1.0505978256302522
+  ],
+  "scales": [
+    1.8441186306756923,
+    19.8766198354891,
+    0.4959475918288448,
+    1.3580912916039578
+  ],
+  "weights": [
+    0.15190973673834965,
+    0.1524893518385014,
+    0.446141268286479,
+    0.04080339836294961
+  ],
+  "bias": -0.27295456202709145,
+  "training_config": {
+    "optimizer": "batch gradient descent",
+    "epochs": 160,
+    "learning_rate": 0.15,
+    "l2": 0.01
+  },
+  "model_version": "logreg-7d-v1",
+  "dataset_sha": "03b8e72f1060e956e141ee8e93b7221d1ff90570def8e92bdd0318e45ed87d41",
+  "training_target_end": "2024-06-10",
+  "validation_target_start": "2024-06-11",
+  "validation_target_end": "2024-06-20",
+  "test_target_start": "2024-06-21",
+  "test_target_end": "2024-07-02",
+  "available_from_as_of": "2024-06-20",
+  "features": [
+    "stockout_days_7d",
+    "stockout_hours_7d",
+    "stockout_on_t",
+    "sales_mean_7d"
+  ],
+  "train_samples": 13600,
+  "validation_samples": 2000,
+  "test_samples": 2400,
+  "score_note": "逻辑回归输出的未校准风险分数；非已校准概率",
+  "report": {
+    "k": 50,
+    "validation": {
+      "rule": {
+        "mean_precision_at_k": 0.644,
+        "mean_recall_at_k": 0.35414655560522557,
+        "days": 10,
+        "daily": [
+          {
+            "target_date": "2024-06-11",
+            "candidates": 200,
+            "selected": 50,
+            "hits": 27,
+            "positives": 73,
+            "precision_at_k": 0.54,
+            "recall_at_k": 0.3698630136986301
+          },
+          {
+            "target_date": "2024-06-12",
+            "candidates": 200,
+            "selected": 50,
+            "hits": 32,
+            "positives": 80,
+            "precision_at_k": 0.64,
+            "recall_at_k": 0.4
+          },
+          {
+            "target_date": "2024-06-13",
+            "candidates": 200,
+            "selected": 50,
+            "hits": 28,
+            "positives": 85,
+            "precision_at_k": 0.56,
+            "recall_at_k": 0.32941176470588235
+          },
+          {
+            "target_date": "2024-06-14",
+            "candidates": 200,
+            "selected": 50,
+            "hits": 27,
+            "positives": 82,
+            "precision_at_k": 0.54,
+            "recall_at_k": 0.32926829268292684
+          },
+          {
+            "target_date": "2024-06-15",
+            "candidates": 200,
+            "selected": 50,
+            "hits": 33,
+            "positives": 96,
+            "precision_at_k": 0.66,
+            "recall_at_k": 0.34375
+          },
+          {
+            "target_date": "2024-06-16",
+            "candidates": 200,
+            "selected": 50,
+            "hits": 41,
+            "positives": 119,
+            "precision_at_k": 0.82,
+            "recall_at_k": 0.3445378151260504
+          },
+          {
+            "target_date": "2024-06-17",
+            "candidates": 200,
+            "selected": 50,
+            "hits": 34,
+            "positives": 89,
+            "precision_at_k": 0.68,
+            "recall_at_k": 0.38202247191011235
+          },
+          {
+            "target_date": "2024-06-18",
+            "candidates": 200,
+            "selected": 50,
+            "hits": 37,
+            "positives": 100,
+            "precision_at_k": 0.74,
+            "recall_at_k": 0.37
+          },
+          {
+            "target_date": "2024-06-19",
+            "candidates": 200,
+            "selected": 50,
+            "hits": 35,
+            "positives": 110,
+            "precision_at_k": 0.7,
+            "recall_at_k": 0.3181818181818182
+          },
+          {
+            "target_date": "2024-06-20",
+            "candidates": 200,
+            "selected": 50,
+            "hits": 28,
+            "positives": 79,
+            "precision_at_k": 0.56,
+            "recall_at_k": 0.35443037974683544
+          }
+        ]
+      },
+      "model": {
+        "mean_precision_at_k": 0.688,
+        "mean_recall_at_k": 0.3794885362739989,
+        "days": 10,
+        "daily": [
+          {
+            "target_date": "2024-06-11",
+            "candidates": 200,
+            "selected": 50,
+            "hits": 30,
+            "positives": 73,
+            "precision_at_k": 0.6,
+            "recall_at_k": 0.410958904109589
+          },
+          {
+            "target_date": "2024-06-12",
+            "candidates": 200,
+            "selected": 50,
+            "hits": 35,
+            "positives": 80,
+            "precision_at_k": 0.7,
+            "recall_at_k": 0.4375
+          },
+          {
+            "target_date": "2024-06-13",
+            "candidates": 200,
+            "selected": 50,
+            "hits": 31,
+            "positives": 85,
+            "precision_at_k": 0.62,
+            "recall_at_k": 0.36470588235294116
+          },
+          {
+            "target_date": "2024-06-14",
+            "candidates": 200,
+            "selected": 50,
+            "hits": 28,
+            "positives": 82,
+            "precision_at_k": 0.56,
+            "recall_at_k": 0.34146341463414637
+          },
+          {
+            "target_date": "2024-06-15",
+            "candidates": 200,
+            "selected": 50,
+            "hits": 30,
+            "positives": 96,
+            "precision_at_k": 0.6,
+            "recall_at_k": 0.3125
+          },
+          {
+            "target_date": "2024-06-16",
+            "candidates": 200,
+            "selected": 50,
+            "hits": 45,
+            "positives": 119,
+            "precision_at_k": 0.9,
+            "recall_at_k": 0.37815126050420167
+          },
+          {
+            "target_date": "2024-06-17",
+            "candidates": 200,
+            "selected": 50,
+            "hits": 34,
+            "positives": 89,
+            "precision_at_k": 0.68,
+            "recall_at_k": 0.38202247191011235
+          },
+          {
+            "target_date": "2024-06-18",
+            "candidates": 200,
+            "selected": 50,
+            "hits": 37,
+            "positives": 100,
+            "precision_at_k": 0.74,
+            "recall_at_k": 0.37
+          },
+          {
+            "target_date": "2024-06-19",
+            "candidates": 200,
+            "selected": 50,
+            "hits": 39,
+            "positives": 110,
+            "precision_at_k": 0.78,
+            "recall_at_k": 0.35454545454545455
+          },
+          {
+            "target_date": "2024-06-20",
+            "candidates": 200,
+            "selected": 50,
+            "hits": 35,
+            "positives": 79,
+            "precision_at_k": 0.7,
+            "recall_at_k": 0.4430379746835443
+          }
+        ]
+      }
+    },
+    "test": {
+      "rule": {
+        "mean_precision_at_k": 0.6033333333333334,
+        "mean_recall_at_k": 0.3700333473931956,
+        "days": 12,
+        "daily": [
+          {
+            "target_date": "2024-06-21",
+            "candidates": 200,
+            "selected": 50,
+            "hits": 25,
+            "positives": 61,
+            "precision_at_k": 0.5,
+            "recall_at_k": 0.4098360655737705
+          },
+          {
+            "target_date": "2024-06-22",
+            "candidates": 200,
+            "selected": 50,
+            "hits": 35,
+            "positives": 73,
+            "precision_at_k": 0.7,
+            "recall_at_k": 0.4794520547945205
+          },
+          {
+            "target_date": "2024-06-23",
+            "candidates": 200,
+            "selected": 50,
+            "hits": 38,
+            "positives": 95,
+            "precision_at_k": 0.76,
+            "recall_at_k": 0.4
+          },
+          {
+            "target_date": "2024-06-24",
+            "candidates": 200,
+            "selected": 50,
+            "hits": 31,
+            "positives": 88,
+            "precision_at_k": 0.62,
+            "recall_at_k": 0.3522727272727273
+          },
+          {
+            "target_date": "2024-06-25",
+            "candidates": 200,
+            "selected": 50,
+            "hits": 36,
+            "positives": 105,
+            "precision_at_k": 0.72,
+            "recall_at_k": 0.34285714285714286
+          },
+          {
+            "target_date": "2024-06-26",
+            "candidates": 200,
+            "selected": 50,
+            "hits": 29,
+            "positives": 86,
+            "precision_at_k": 0.58,
+            "recall_at_k": 0.3372093023255814
+          },
+          {
+            "target_date": "2024-06-27",
+            "candidates": 200,
+            "selected": 50,
+            "hits": 29,
+            "positives": 82,
+            "precision_at_k": 0.58,
+            "recall_at_k": 0.35365853658536583
+          },
+          {
+            "target_date": "2024-06-28",
+            "candidates": 200,
+            "selected": 50,
+            "hits": 21,
+            "positives": 65,
+            "precision_at_k": 0.42,
+            "recall_at_k": 0.3230769230769231
+          },
+          {
+            "target_date": "2024-06-29",
+            "candidates": 200,
+            "selected": 50,
+            "hits": 24,
+            "positives": 68,
+            "precision_at_k": 0.48,
+            "recall_at_k": 0.35294117647058826
+          },
+          {
+            "target_date": "2024-06-30",
+            "candidates": 200,
+            "selected": 50,
+            "hits": 31,
+            "positives": 79,
+            "precision_at_k": 0.62,
+            "recall_at_k": 0.3924050632911392
+          },
+          {
+            "target_date": "2024-07-01",
+            "candidates": 200,
+            "selected": 50,
+            "hits": 30,
+            "positives": 85,
+            "precision_at_k": 0.6,
+            "recall_at_k": 0.35294117647058826
+          },
+          {
+            "target_date": "2024-07-02",
+            "candidates": 200,
+            "selected": 50,
+            "hits": 33,
+            "positives": 96,
+            "precision_at_k": 0.66,
+            "recall_at_k": 0.34375
+          }
+        ]
+      },
+      "model": {
+        "mean_precision_at_k": 0.63,
+        "mean_recall_at_k": 0.38790311167021646,
+        "days": 12,
+        "daily": [
+          {
+            "target_date": "2024-06-21",
+            "candidates": 200,
+            "selected": 50,
+            "hits": 28,
+            "positives": 61,
+            "precision_at_k": 0.56,
+            "recall_at_k": 0.45901639344262296
+          },
+          {
+            "target_date": "2024-06-22",
+            "candidates": 200,
+            "selected": 50,
+            "hits": 31,
+            "positives": 73,
+            "precision_at_k": 0.62,
+            "recall_at_k": 0.4246575342465753
+          },
+          {
+            "target_date": "2024-06-23",
+            "candidates": 200,
+            "selected": 50,
+            "hits": 40,
+            "positives": 95,
+            "precision_at_k": 0.8,
+            "recall_at_k": 0.42105263157894735
+          },
+          {
+            "target_date": "2024-06-24",
+            "candidates": 200,
+            "selected": 50,
+            "hits": 34,
+            "positives": 88,
+            "precision_at_k": 0.68,
+            "recall_at_k": 0.38636363636363635
+          },
+          {
+            "target_date": "2024-06-25",
+            "candidates": 200,
+            "selected": 50,
+            "hits": 38,
+            "positives": 105,
+            "precision_at_k": 0.76,
+            "recall_at_k": 0.3619047619047619
+          },
+          {
+            "target_date": "2024-06-26",
+            "candidates": 200,
+            "selected": 50,
+            "hits": 31,
+            "positives": 86,
+            "precision_at_k": 0.62,
+            "recall_at_k": 0.36046511627906974
+          },
+          {
+            "target_date": "2024-06-27",
+            "candidates": 200,
+            "selected": 50,
+            "hits": 30,
+            "positives": 82,
+            "precision_at_k": 0.6,
+            "recall_at_k": 0.36585365853658536
+          },
+          {
+            "target_date": "2024-06-28",
+            "candidates": 200,
+            "selected": 50,
+            "hits": 27,
+            "positives": 65,
+            "precision_at_k": 0.54,
+            "recall_at_k": 0.4153846153846154
+          },
+          {
+            "target_date": "2024-06-29",
+            "candidates": 200,
+            "selected": 50,
+            "hits": 26,
+            "positives": 68,
+            "precision_at_k": 0.52,
+            "recall_at_k": 0.38235294117647056
+          },
+          {
+            "target_date": "2024-06-30",
+            "candidates": 200,
+            "selected": 50,
+            "hits": 30,
+            "positives": 79,
+            "precision_at_k": 0.6,
+            "recall_at_k": 0.379746835443038
+          },
+          {
+            "target_date": "2024-07-01",
+            "candidates": 200,
+            "selected": 50,
+            "hits": 31,
+            "positives": 85,
+            "precision_at_k": 0.62,
+            "recall_at_k": 0.36470588235294116
+          },
+          {
+            "target_date": "2024-07-02",
+            "candidates": 200,
+            "selected": 50,
+            "hits": 32,
+            "positives": 96,
+            "precision_at_k": 0.64,
+            "recall_at_k": 0.3333333333333333
+          }
+        ]
+      }
+    },
+    "caveat": "真实历史数据上的离线回放；非真实干预收益。"
+  }
+}
